@@ -11,6 +11,7 @@ int main()
     string keywords[] = {"int","float","char","double","return",
                          "using","namespace","cout","endl","main"};
 
+
     if (!file) {
         cout << "File not found!" << endl;
         return 0;
@@ -18,51 +19,47 @@ int main()
 
     while (getline(file, line))
     {
-        cout << "Line " << lineNum << ":\n";
-        string token = "";
+    cout << "Line " << lineNum << ":\n";
+    string token = "";
 
-        for (int i = 0; i <= line.length(); i++)
-        {
+    for (int i = 0; i <= line.length(); i++)
+    {
         char c = line[i];
 
-        bool isP = (c=='{'||c=='}'||c=='('||c==')'||c==';'||c=='<'||c=='>'||c=='#');
-        bool isO = (c=='+'||c=='-'||c=='*'||c=='/'||c=='=');
+            bool isP = (c=='{'||c=='}'||c=='('||c==')'||c==';'||c=='<'||c=='>'||c=='#'||c==',');
 
-        if (c==' ' || c=='\t' || c=='\0' || isP || isO)
-        {
-        if (token != "")
-        {
-        bool key = false, num = true;
+            bool isO = (c=='+'||c=='-'||c=='*'||c=='/'||c=='=');
 
-        for (int k = 0; k < 10; k++)
-        if (token == keywords[k]) key = true;
+            if (c==' ' || c=='\t' || c=='\0' || isP || isO)
+            {
+                if (token != "")
+                {
+                bool key = false, num = true;
 
-        for (int k = 0; k < token.length(); k++)
-        if (token[k] < '0' || token[k] > '9') num = false;
+                for (int k = 0; k < 10; k++)
+                if (token == keywords[k]) key = true;
 
-        if (key)
-        {
-            cout << "  " << token << " --> Keyword\n";
-        }
+                for (int k = 0; k < token.length(); k++)
+                if (token[k] < '0' || token[k] > '9') num = false;
 
-        else if (num)
-        {
-            cout << "  " << token << " --> Constant\n";
-        }
-        else
-            cout << "  " << token << " --> Identifier\n";
+                if (key)
+                cout << "  " << token << " --> Keyword\n";
+                else if (num)
+                cout << "  " << token << " --> Constant\n";
+                else
+                cout << "  " << token << " --> Identifier\n";
 
-        token = "";
-        }
+                token = "";
+                }
 
-            if (isP) cout << "  " << c << " --> Punctuation\n";
-            if (isO) cout << "  " << c << " --> Operator\n";
+                if (isP) cout << "  " << c << " --> Punctuation\n";
+                if (isO) cout << "  " << c << " --> Operator\n";
             }
-        else
+    else
         {
             token += c;
         }
-        }
+    }
 
         cout << endl;
         lineNum++;
